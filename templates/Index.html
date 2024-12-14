@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'blank_layout.html' %}
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        td {
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+        .btn{
+            height: 3rem;
+            width: 28rem;
+            border: none;
+            border-radius: 2rem  .5rem .2rem;
+            background: #400094;
+        }
+        .btn a{
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bolder;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        td a{
+            padding: 1rem;
+            border: none;
+            border-radius: 2rem  .5rem .2rem;
+            background: #400094;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bus Information</h1>
+    <button class="btn">
+    <a href="{% url 'create' %}">Create New Bus</a>
+</button>
+    <table id="bus-table">
+        <thead>
+            <tr>
+                <th>Bus Name</th>
+                <th>Bus Number</th>
+                <th>Bus Route</th>
+                <th>Bus Owner</th>
+                <th>Bus Image</th>
+                <th>Action-1</th>
+                <th>Action-2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example Rows -->
+            {% for Bus in Buses %}
+
+            <tr>
+                <td>{{ Bus.Bus_name }}</td>
+                <td>{{ Bus.Bus_number }}</td>
+                <td>{{Bus.Bus_root}}</td>
+                <td>{{Bus.Bus_owner}}</td>
+                <td><img width="150" height="150" src="{{ Bus.Bus_image.url }}" /> <img /></td>
+                <td><a href="{% url 'edit' Bus.pk %}">Edit</a> </td>
+                <td><a href="{% url 'delete' Bus.pk %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableRows = document.querySelectorAll('#bus-table tbody tr');
+
+            tableRows.forEach(row => {
+                row.addEventListener('click', () => {
+                    alert(`You clicked on ${row.cells[0].innerText}`);
+                });
+            });
+        });
+    </script>
+        {% endblock content %}
+
+</body>
+</html>

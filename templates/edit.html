@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    {% extends 'blank_layout.html' %}
+    {% block content %}
+<head>
+    <title>Edit Bus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input, button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Bus</h1>
+    <form id="editBusForm" method="post" enctype="multipart/form-data" onsubmit="return handleFormSubmit(event)">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = document.getElementById('editBusForm');
+            const formData = new FormData(form);
+
+            // Display a message or perform actions before form submission
+            alert('Form is being submitted...');
+
+            // Now, submit the form data using fetch API or any other method if needed
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+            }).then(response => {
+                if (response.ok) {
+                    alert('Changes saved successfully!');
+                } else {
+                    alert('Error saving changes.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+
+            return false; // Prevent the default form submission
+        }
+    </script>
+        {% endblock content %}
+
+</body>
+</html>

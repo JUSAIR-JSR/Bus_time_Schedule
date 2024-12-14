@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    {% extends 'blank_layout.html' %}
+    {% block content %}
+<head>
+    <title>All Buses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Buses</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Bus Name</th>
+                <th>Bus Number</th>
+                <th>Bus Route</th>
+                <th>Bus Owner</th>
+                <th>Bus Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bus in buses %}
+                <tr>
+                    <td>{{ bus.Bus_name }}</td>
+                    <td>{{ bus.Bus_number }}</td>
+                    <td>{{ bus.Bus_root }}</td>
+                    <td>{{ bus.Bus_owner }}</td>
+                    <td><img src="{{ bus.Bus_image.url }}" alt="{{ bus.Bus_name }}"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock content %}
+
+</body>
+</html>
