@@ -3,26 +3,29 @@ from .models import MovieInfo
 from .forms import MovieForm
 from django.contrib.auth.decorators import login_required
 
-
 # Create your views here.
 
+@login_required
 def create(request):
     if request.method == "POST":
         form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('show')
+            movie = form.save(commit=False)
+            movie.created_by = request.user
+            movie.save()
+            return redirect('index.html')
     else:
         form = MovieForm()
     return render(request, 'create.html', {'form': form})
 
-@login_required(login_url='login')
+@login_required
 def show(request):
     Buses = MovieInfo.objects.all()
     return render(request, 'index.html', {'Buses': Buses})
 
+@login_required
 def edit(request, pk):
-    movie = get_object_or_404(MovieInfo, pk=pk)
+    movie = get_object_or_404(MovieInfo, pk=pk, created_by=request.user)
     if request.method == "POST":
         form = MovieForm(request.POST, request.FILES, instance=movie)
         if form.is_valid():
@@ -32,8 +35,9 @@ def edit(request, pk):
         form = MovieForm(instance=movie)
     return render(request, 'edit.html', {'form': form})
 
+@login_required
 def delete(request, pk):
-    movie = get_object_or_404(MovieInfo, pk=pk)
+    movie = get_object_or_404(MovieInfo, pk=pk, created_by=request.user)
     if request.method == "POST":
         movie.delete()
         return redirect('show')

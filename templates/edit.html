@@ -34,6 +34,11 @@
             border: 1px solid #ddd;
             box-sizing: border-box;
         }
+        textarea{
+            border: 1px solid #a9a9a9;
+            height: 3rem;
+            border-radius: 2px;
+        }
 
         button {
             background-color: #4CAF50;
@@ -45,15 +50,18 @@
         button:hover {
             background-color: #45a049;
         }
-    </style>
+    </style>    
 </head>
-<body>
-    <h1>Edit Bus</h1>
-    <form id="editBusForm" method="post" enctype="multipart/form-data" onsubmit="return handleFormSubmit(event)">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center text-green-500">Edit Bus</h1>
+        <form id="editBusForm" method="post" enctype="multipart/form-data" onsubmit="return handleFormSubmit(event)" class="bg-white p-6 rounded-lg shadow-md border border-gray-300 max-w-lg mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">Save Changes</button>
+            <p id="form-status" class="text-center mt-4"></p>
+        </form>
+    </div>
 
     <script>
         function handleFormSubmit(event) {
@@ -61,28 +69,36 @@
 
             const form = document.getElementById('editBusForm');
             const formData = new FormData(form);
+            const formStatus = document.getElementById('form-status');
+            
+            // Display a loading message before form submission
+            formStatus.innerText = 'Submitting...';
+            formStatus.className = 'text-blue-500';
 
-            // Display a message or perform actions before form submission
-            alert('Form is being submitted...');
-
-            // Now, submit the form data using fetch API or any other method if needed
+            // Now, submit the form data using fetch API
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
             }).then(response => {
                 if (response.ok) {
-                    alert('Changes saved successfully!');
+                    formStatus.innerText = 'Changes saved successfully!';
+                    formStatus.className = 'text-green-500';
                 } else {
-                    alert('Error saving changes.');
+                    formStatus.innerText = 'Error saving changes.';
+                    formStatus.className = 'text-red-500';
                 }
             }).catch(error => {
+                formStatus.innerText = 'Error: ' + error;
+                formStatus.className = 'text-red-500';
                 console.error('Error:', error);
             });
 
             return false; // Prevent the default form submission
         }
     </script>
-        {% endblock content %}
+    {% endblock content %}
 
 </body>
 </html>
+
+

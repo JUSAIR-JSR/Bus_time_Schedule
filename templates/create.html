@@ -5,55 +5,39 @@
 <head>
     <title>Create Bus</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            text-align: center;
-            padding: 20px;
+        p{
+            margin-bottom: 2rem;
+           
         }
-
-        h1 {
-            color: #4CAF50;
+        input{
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: .5rem 3rem;
+            border-radius: .2rem;
         }
-
-        form {
-            display: inline-block;
-            text-align: left;
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        input, button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
+        textarea{
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            height: 3rem;
         }
     </style>
+  
 </head>
-<body>
-    <h1>Create Bus</h1>
-    <form id="createBusForm" method="post" enctype="multipart/form-data" onsubmit="return handleFormSubmit(event)">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create</button>
-    </form>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Create Bus</h1>
+        <form id="createBusForm" method="post" enctype="multipart/form-data" onsubmit="return handleFormSubmit(event)" class="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 border border-gray-300">Create</button>
+            <p id="form-status" class="text-center mt-4"></p>
+        </form>
+    </div>
 
     <script>
         function handleFormSubmit(event) {
@@ -61,21 +45,27 @@
 
             const form = document.getElementById('createBusForm');
             const formData = new FormData(form);
+            const formStatus = document.getElementById('form-status');
+            
+            // Display a loading message before form submission
+            formStatus.innerText = 'Submitting...';
+            formStatus.className = 'text-blue-500';
 
-            // Display a message or perform actions before form submission
-            alert('Form is being submitted...');
-
-            // Now, submit the form data using fetch API or any other method if needed
+            // Now, submit the form data using fetch API
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
             }).then(response => {
                 if (response.ok) {
-                    alert('Form submitted successfully!');
+                    formStatus.innerText = 'Form submitted successfully!';
+                    formStatus.className = 'text-green-500';
                 } else {
-                    alert('Error submitting form.');
+                    formStatus.innerText = 'Error submitting form.';
+                    formStatus.className = 'text-red-500';
                 }
             }).catch(error => {
+                formStatus.innerText = 'Error: ' + error;
+                formStatus.className = 'text-red-500';
                 console.error('Error:', error);
             });
 
@@ -86,3 +76,6 @@
 
 </body>
 </html>
+
+
+

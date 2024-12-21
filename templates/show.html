@@ -1,78 +1,43 @@
-<!DOCTYPE html>
-<html>
-    {% extends 'blank_layout.html' %}
-    {% block content %}
-<head>
-    <title>All Buses</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
 
-        h1 {
-            color: #4CAF50;
-        }
+{% extends 'blank_layout.html' %}
+{% block content %}
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Bus Information</h1>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Bus Name</th>
+                        <th class="py-3 px-6 text-left">Bus Number</th>
+                        <th class="py-3 px-6 text-left">Bus Route</th>
+                        <th class="py-3 px-6 text-left">Bus Time</th>
+                        <th class="py-3 px-6 text-left">Bus Owner</th>
+                        <th class="py-3 px-6 text-center">Image</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                    {% for bus in buses %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">{{ bus.Bus_name }}</td>
+                        <td class="py-3 px-6 text-left">{{ bus.Bus_number }}</td>
+                        <td class="py-3 px-6 text-left">{{ bus.Bus_root }}</td>
+                        <td class="py-3 px-6 text-left">{{ bus.Bus_time }}</td>
+                        <td class="py-3 px-6 text-left">{{ bus.Bus_owner }}</td>
+                        <td class="py-3 px-6 text-center">
+                            <img alt="team" class="rounded-lg w-20 h-12 object-contain object-center" src="{{ bus.Bus_image.url }}">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
 
-        tr:hover {
-            background-color: #ddd;
-        }
+{% endblock content %}
 
-        img {
-            max-width: 100px;
-            max-height: 100px;
-        }
-    </style>
-</head>
-<body>
-    <h1>All Buses</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Bus Name</th>
-                <th>Bus Number</th>
-                <th>Bus Route</th>
-                <th>Bus Owner</th>
-                <th>Bus Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for bus in buses %}
-                <tr>
-                    <td>{{ bus.Bus_name }}</td>
-                    <td>{{ bus.Bus_number }}</td>
-                    <td>{{ bus.Bus_root }}</td>
-                    <td>{{ bus.Bus_owner }}</td>
-                    <td><img src="{{ bus.Bus_image.url }}" alt="{{ bus.Bus_name }}"></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endblock content %}
 
-</body>
-</html>
+

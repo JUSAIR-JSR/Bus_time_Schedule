@@ -1,113 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% extends 'blank_layout.html' %}
-    {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus Information</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
+{% extends 'blank_layout.html' %}
+{% block content %}
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-        }
-
-        td {
-            cursor: pointer;
-        }
-
-        img {
-            max-width: 100px;
-            max-height: 100px;
-        }
-        .btn{
-            height: 3rem;
-            width: 28rem;
-            border: none;
-            border-radius: 2rem  .5rem .2rem;
-            background: #400094;
-        }
-        .btn a{
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: bolder;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        td a{
-            padding: 1rem;
-            border: none;
-            border-radius: 2rem  .5rem .2rem;
-            background: #400094;
-            text-decoration: none;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <h1>Bus Information</h1>
-    <button class="btn">
-    <a href="{% url 'create' %}">Create New Bus</a>
-</button>
-    <table id="bus-table">
-        <thead>
-            <tr>
-                <th>Bus Name</th>
-                <th>Bus Number</th>
-                <th>Bus Route</th>
-                <th>Bus Owner</th>
-                <th>Bus Image</th>
-                <th>Action-1</th>
-                <th>Action-2</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example Rows -->
-            {% for Bus in Buses %}
-
-            <tr>
-                <td>{{ Bus.Bus_name }}</td>
-                <td>{{ Bus.Bus_number }}</td>
-                <td>{{Bus.Bus_root}}</td>
-                <td>{{Bus.Bus_owner}}</td>
-                <td><img width="150" height="150" src="{{ Bus.Bus_image.url }}" /> <img /></td>
-                <td><a href="{% url 'edit' Bus.pk %}">Edit</a> </td>
-                <td><a href="{% url 'delete' Bus.pk %}">Delete</a></td>
-            </tr>
-            {% endfor %}
-
-        </tbody>
-    </table>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Bus Information</h1>
+        <div class="flex justify-end mb-4">
+            <a href="{% url 'create' %}" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                <i class="fas fa-plus mr-2"></i> Create New Bus
+            </a>
+        </div>
+        <div class="overflow-x-auto">
+            <table id="bus-table" class="min-w-full bg-white rounded-lg shadow-md">
+                <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <tr>
+                        <th class="py-3 px-6 text-left">Bus Name</th>
+                        <th class="py-3 px-6 text-left">Bus Number</th>
+                        <th class="py-3 px-6 text-left">Bus Route</th>
+                        <th class="py-3 px-6 text-left">Bus Time</th>
+                        <th class="py-3 px-6 text-left">Bus Owner</th>
+                        <th class="py-3 px-6 text-left">Bus Image</th>
+                        <th class="py-3 px-6 text-center">Edit</th>
+                        <th class="py-3 px-6 text-center">Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                    {% for Bus in Buses %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">{{ Bus.Bus_name }}</td>
+                        <td class="py-3 px-6 text-left">{{ Bus.Bus_number }}</td>
+                        <td class="py-3 px-6 text-left">{{ Bus.Bus_root }}</td>
+                        <td class="py-3 px-6 text-left">{{ Bus.Bus_time }}</td>
+                        <td class="py-3 px-6 text-left">{{ Bus.Bus_owner }}</td>
+                        <td class="py-3 px-6 text-center">
+                            <img alt="Bus Image" class="rounded-lg w-20 h-20 object-contain" src="{{ Bus.Bus_image.url }}">
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <a href="{% url 'edit' Bus.pk %}" class="text-blue-500 hover:text-blue-700 flex justify-center items-center">
+                                <i class="fas fa-edit mr-1"></i> Edit
+                            </a>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <a href="{% url 'delete' Bus.pk %}" class="text-red-500 hover:text-red-700 flex justify-center items-center">
+                                <i class="fas fa-trash-alt mr-1"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -120,7 +62,6 @@
             });
         });
     </script>
-        {% endblock content %}
-
 </body>
-</html>
+
+{% endblock content %}
