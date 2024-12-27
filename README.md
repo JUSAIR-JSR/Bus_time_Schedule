@@ -23,7 +23,7 @@ pip install django
 #### 6.And open command prompt or vscode in this folder and enter this command
 
 ```
-django-admin startproject mysite
+python manage.py runserver
 
 ```
 
