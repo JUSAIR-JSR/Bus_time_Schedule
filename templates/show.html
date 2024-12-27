@@ -19,14 +19,14 @@
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
                     {% for bus in buses %}
-                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 text-xl">
                         <td class="py-3 px-6 text-left whitespace-nowrap">{{ bus.Bus_name }}</td>
                         <td class="py-3 px-6 text-left">{{ bus.Bus_number }}</td>
                         <td class="py-3 px-6 text-left">{{ bus.Bus_root }}</td>
                         <td class="py-3 px-6 text-left">{{ bus.Bus_time }}</td>
                         <td class="py-3 px-6 text-left">{{ bus.Bus_owner }}</td>
                         <td class="py-3 px-6 text-center">
-                            <img alt="team" class="rounded-lg w-20 h-12 object-contain object-center" src="{{ bus.Bus_image.url }}">
+                            <img alt="team" class="rounded-lg w-20 h-20 object-contain" src="{{ bus.Bus_image.url }}">
                         </td>
                     </tr>
                     {% endfor %}
